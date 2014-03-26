@@ -63,3 +63,7 @@ export CFG_CFG="${CFG_CFG_PATH}/__cfg.cfg"
 export CFG_CFG_PARSED="${CFG_CFG_PATH}/__cfg.parsed"
 export CFG_TMP="${CFG_TMP_PATH}/tmp"
 
+##
+#   MISC
+##
+export CFG_DIR_NAME=".cfg"

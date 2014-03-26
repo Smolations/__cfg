@@ -1,3 +1,3 @@
-function __w {
+function _w {
     echo "${_W}__cfg:${_WHITE}  ${@}${_X}"
 }

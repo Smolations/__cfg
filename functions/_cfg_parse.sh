@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function __cfg_parse {
+function _cfg_parse {
     local key val
 
     cat /dev/null > "$cfg_tmp";

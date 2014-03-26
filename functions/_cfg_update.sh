@@ -30,7 +30,7 @@
 ## */
 
 
-function __cfg_update {
+function _cfg_update {
 	# local function variables
 	local line defaults_version current_version i
 	declare -a keys new_settings

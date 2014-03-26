@@ -18,29 +18,28 @@
 #
 #   @file functions/__cfg_exists.sh
 ## */
-function __cfg_exists {
+function _cfg_exists {
     local ret cfg_dir cur_dir=$(pwd) i=20
 
     while [ -n "$cur_dir" ] && (( i > 0 )); do
         # echo "${i}: ${cur_dir}"
+        [ -d "${cur_dir}/${CFG_DIR_NAME}" ] && break
         cur_dir="${cur_dir%\/*}"
         (( i-- ))
     done
 
     if (( i == 0 )); then
         # cant be more than 30 levels deep
-        __er "this directory structure is more than ${i} levels deep."
+        _er "this directory structure is more than ${i} levels deep."
         ret=1
 
     elif [ -z "$cur_dir" ]; then
         # no cfg found
-        # __er "no cfg found."
         ret=2
 
     else
         # we've got a cfg!
         export __CFG_DIR="$cur_dir"
-        __out "cfg found!  ${__CFG_DIR}"
         ret=0
     fi
 

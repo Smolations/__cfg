@@ -27,8 +27,8 @@
 #
 #	@file functions/__cfg_search.sh
 ## */
-function __cfg_search {
-	__cfg_exists || return 2
+function _cfg_search {
+	_cfg_exists || return 2
 	[ -z "$1" ] && return 4
 
 	egrep -q "^${1}=" "${cfg_cfg}"

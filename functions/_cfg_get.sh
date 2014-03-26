@@ -1,6 +1,6 @@
 # @param key
 # @opt -o | --original
-function __cfg_get {
+function _cfg_get {
     local file="${cfg_cfg_parsed}"
     local key="$1"
     [ -n "`egrep "\\-o |\\-\\-original " <<< "$@"`" ] && {

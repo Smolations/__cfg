@@ -1,12 +1,12 @@
 
-function __cfg_set {
+function _cfg_set {
     local KEY="$1" VAL="$2"
 
-    __cfg_exists  || return 1
+    _cfg_exists  || return 1
     [ -z "$KEY" ] || [ -z "$VAL" ] && return 2
 
     # find key. will need to replace value.
-    if __cfg_search "$KEY"; then
+    if _cfg_search "$KEY"; then
         # make sure awk processing errors are caught
         if ! awk -v key="$KEY" -v value="$VAL" -f "${cfg_awk_path}/cfg-set-value.awk" "$cfg_cfg" > "$cfg_tmp"; then
             echo ${E}"  Error setting value in awk!  "${X}
@@ -20,7 +20,7 @@ function __cfg_set {
 
     # copy temp config to permanent config
     if cp -f "$cfg_tmp" "$cfg_cfg"; then
-        __cfg_parse
+        _cfg_parse
         rm -f "$cfg_tmp"
         return 0
     else

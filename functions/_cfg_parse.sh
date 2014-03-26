@@ -1,10 +1,9 @@
-#!/bin/bash
 
 function _cfg_parse {
     local key val
 
-    cat /dev/null > "$cfg_tmp";
-    cat /dev/null > "$cfg_cfg_parsed";
+    : > "$__CFG_TMP"
+    : > "$__CFG_PARSED"
 
     # begin looping through each line of the cfg file
     while read line; do
@@ -13,34 +12,38 @@ function _cfg_parse {
             key="${line%%=*}"
             val="${line#*=}"
             echo
-            echo "${A}${key}${X}=${S}${val}${X}";
+            echo "${A}${key}${X}=${S}${val}${X}"
 
             # save the key pattern (\@\{key\.pattern\}) to a file. this is a running list.
-            echo "\\@\\{${key//\./\\.}\\}" >> "$cfg_tmp"
+            echo "\\@\\{${key//\./\\.}\\}" >> "$__CFG_TMP"
 
             # echo
             # echo "${S}val${X}: $val"
             # look for any of the keys being referenced in the value of the current line
-            theMatch=`egrep --only-matching --file="$cfg_tmp" <<< "$val"`
+            theMatch=$(egrep --only-matching --file="$__CFG_TMP" <<< "$val")
             echo "${_B}theMatch:${_X} $theMatch"
+
             if [ -z "$theMatch" ]; then
                 # if no match, just output the line to the parsed file.
-                echo "'${key}=${val}' ${_YELLOW}>>${_X} '$cfg_cfg_parsed'"
-                echo "${key}=${val}" >> "$cfg_cfg_parsed"
+                echo "'${key}=${val}' ${_YELLOW}>>${_X} '$__CFG_PARSED'"
+                echo "${key}=${val}" >> "$__CFG_PARSED"
 
             else
                 # now find out which key it is, and replace the key reference with that key's parsed value.
-                bareMatch=`egrep --only-matching '\{[a-zA-Z0-9][.a-zA-Z0-9]+\}' <<< "$theMatch"`
+                bareMatch=$(egrep --only-matching '\{[a-zA-Z0-9][.a-zA-Z0-9]+\}' <<< "$theMatch")
                 bareMatch="${bareMatch//[\{\}]/}"
+
                 echo "${_B}bareMatch:${_X} ${bareMatch}"
-                echo "__cfg_get --original '${bareMatch}' = `__cfg_get --original "${bareMatch}"`"
-                echo "'${key}=${val//$theMatch/`__cfg_get "${bareMatch}"`}' ${_YELLOW}>>${_X} '$cfg_cfg_parsed'"
-                echo "${key}=${val//$theMatch/`__cfg_get "${bareMatch}"`}" >> "$cfg_cfg_parsed"
+                echo "_cfg_get --original '${bareMatch}' = `_cfg_get --original "${bareMatch}"`"
+                myget=$(_cfg_get "${bareMatch}")
+                echo "'${key}=${val//$theMatch/$myget}' ${_YELLOW}>>${_X} '$__CFG_PARSED'"
+                echo "${key}=${val//$theMatch/$myget}" >> "$__CFG_PARSED"
             fi
         else
-            echo "${line}" >> "$cfg_cfg_parsed"
+            echo "${line}" >> "$__CFG_PARSED"
         fi
-    done <"${cfg_cfg}"
+    done < "${__CFG_RAW}"
+
     #rm -f "$cfg_tmp"
     # echo
     # echo "${S}Parsed file${X}:"

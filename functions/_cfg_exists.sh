@@ -39,7 +39,7 @@ function _cfg_exists {
 
     else
         # we've got a cfg!
-        export __CFG_DIR="$cur_dir"
+        _set_cfg_vars "${cur_dir}"
         ret=0
     fi
 

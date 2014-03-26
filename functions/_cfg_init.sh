@@ -17,12 +17,11 @@ function _cfg_init {
         echo
     fi
 
-    export __CFG_DIR="$cur_dir"
-    cfg_dir="${__CFG_DIR}/${CFG_DIR_NAME}"
+    _set_cfg_vars "${cur_dir}"
 
-    mkdir -p "$cfg_dir"
-    touch "${cfg_dir}/cfg.parsed"
-    touch "${cfg_dir}/cfg.cfg"
+    mkdir -p "$__CFG_DIR"
+    touch "$__CFG_RAW"
+    touch "$__CFG_PARSED"
 
     _out "initialized empty cfg at the current path."
 }

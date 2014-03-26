@@ -25,11 +25,10 @@
 #	gitscripts/functions/0200.gslog.sh
 #	dependencies@
 #
-#	@file functions/__cfg_search.sh
+#	@file functions/_cfg_search.sh
 ## */
 function _cfg_search {
-	_cfg_exists || return 2
-	[ -z "$1" ] && return 4
+	[ -z "$1" ] && return 1
 
-	egrep -q "^${1}=" "${cfg_cfg}"
+	egrep -q "^${1}=" "${__CFG_PARSED}"
 }

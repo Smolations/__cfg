@@ -1,16 +1,17 @@
 # @param key
 # @opt -o | --original
 function _cfg_get {
-    local file="${cfg_cfg_parsed}"
-    local key="$1"
-    [ -n "`egrep "\\-o |\\-\\-original " <<< "$@"`" ] && {
+    local grepped file="${__CFG_PARSED}"
+
+    if egrep -q "\\-o |\\-\\-original " <<< "$@"; then
+    # [ -n "`egrep "\\-o |\\-\\-original " <<< "$@"`" ] && {
         # echo "use original"
-        file="${cfg_cfg}"
-        key="$2"
-    }
+        file="${__CFG_RAW}"
+        shift
+    fi
     # echo "file: $file"
 
-    local grepped=`egrep "^${key}=" "$file"`
+    grepped=$(egrep "^${1}=" "$file")
     echo "${grepped#*=}"
 
 

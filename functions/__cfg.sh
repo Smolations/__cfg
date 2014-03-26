@@ -45,7 +45,7 @@
 
 
 function __cfg {
-    local numArgs key val
+    local numArgs key val raw_flag="-r"
 
     if ! _cfg_exists; then
         _er "no cfg found. try \`__cfg init\`."
@@ -54,16 +54,22 @@ function __cfg {
 
     case $# in
         2)
-            # user is setting a key
-            key="$1"
-            val="$2"
-            _cfg_set "$key" "$val"
+            # check to see if user wants the raw value for a key
+            if [ "$1" == "$raw_flag" ]; then
+                _cfg_get -r "$2"
+            else
+                _cfg_set "$1" "$2"
+            fi
             ;;
 
         1)
             case "$1" in
                 "-d")
                     _out "current cfg directory = ${__CFG_DIR}";;
+
+                $raw_flag)
+                    # output entire contents of $__CFG_RAW
+                    ;;
 
                 "init")
                     _cfg_init;;

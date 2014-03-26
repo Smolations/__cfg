@@ -18,25 +18,3 @@ source "${CFG_PATH}/source/environment.sh"
 
 # load functions
 source "${CFG_SRC_PATH}/load_functions.sh"
-
-# create tmp directory if it doesn't exist
-[ ! -d "${CFG_TMP_PATH}" ] && mkdir "${CFG_TMP_PATH}"
-
-echo "CFG_PATH=${CFG_PATH}/"
-
-
-
-# set some initial info for __cfg's cfg
-# __cfg __cfg set paths.cfg.install "${__cfg_path}"
-
-# parse each config file
-# for file in "${cfg_cfg_path}/"*; do
-
-
-# __cfg project new <label>
-# __cfg project rm <label>
-# __cfg project activate <label>
-
-
-# __cfg [projectname] set/get/etc
-#     - omitting project name will use the default project

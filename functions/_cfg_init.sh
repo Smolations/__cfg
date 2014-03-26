@@ -1,4 +1,24 @@
-
+## /* @function
+#   @usage _cfg_init
+#
+#   @output true (for errors and info)
+#
+#   @description
+#   Initialize a new cfg for the current folder hierarchy. If one already exists,
+#   either in the current directory or in some parent folder, the user will be
+#   asked if they want to reset the cfg. If the user answers "yes," the existing
+#   cfg will be removed and a new one will be created within the current directory.
+#   description@
+#
+#   @dependencies
+#   functions/_cfg_exists.sh
+#   functions/_out.sh
+#   functions/_set_cfg_vars.sh
+#   functions/_w.sh
+#   dependencies@
+#
+#   @file functions/_cfg_init.sh
+## */
 function _cfg_init {
     local cfg_dir cur_dir=$(pwd)
 

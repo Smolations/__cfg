@@ -1,7 +1,7 @@
-## /*
-#   @usage __cfg_exists
+## /* @function
+#   @usage _cfg_exists
 #
-#   @output false
+#   @output true (on error)
 #
 #   @description
 #   Shortcut for testing that the cfg file exists and is non-empty.
@@ -9,12 +9,19 @@
 #
 #   @notes
 #   - Meant for use in conditionals.
+#   - To prevent any weird recursion issues, the folder hierarchy crawl aborts
+#   if the number of levels exceeds a given limit.
 #   notes@
 #
 #   @examples
 #   # get the value associated with "mykey" in the config file
-#   __cfg_exists && myvar=`__cfg get mykey`
+#   _cfg_exists && myvar=`_cfg_get mykey`
 #   examples@
+#
+#   @dependencies
+#   functions/_er.sh
+#   functions/_set_cfg_vars.sh
+#   dependencies@
 #
 #   @file functions/__cfg_exists.sh
 ## */

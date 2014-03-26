@@ -41,9 +41,9 @@ PRE=$'\033['
 [ -n "${_X}" ]                  || export _X=${_NORM}
 [ -n "${_B}" ]                  || export _B=${_BRIGHT}
 [ -n "${_ER}" ]                 || export _ER=${_X}${_BRIGHT}${_RED}
-[ -n "${_S}" ]                  || export _S=${_X}${_BRIGHT}${_GREEN}
-[ -n "${_O}" ]                  || export _O=${_X}${_BRIGHT}${_MAGENTA}
 [ -n "${_W}" ]                  || export _W=${_X}${_BRIGHT}${_YELLOW}
+[ -n "${_O}" ]                  || export _O=${_X}${_BRIGHT}${_MAGENTA}
+[ -n "${_S}" ]                  || export _S=${_X}${_BRIGHT}${_GREEN}
 [ -n "${_ARG}" ]                || export _ARG=${_X}${_BRIGHT}${_CYAN}
 
 
@@ -53,17 +53,8 @@ PRE=$'\033['
 export CFG_AWK_PATH="${__CFG_PATH}/awk"
 export CFG_FN_PATH="${__CFG_PATH}/functions"
 export CFG_SRC_PATH="${__CFG_PATH}/source"
-export CFG_CFG_PATH="${__CFG_PATH}/cfg"
-export CFG_TMP_PATH="${__CFG_PATH}/tmp"
 
 ##
-#   Paths to Files
-##
-export CFG_CFG="${CFG_CFG_PATH}/__cfg.cfg"
-export CFG_CFG_PARSED="${CFG_CFG_PATH}/__cfg.parsed"
-export CFG_TMP="${CFG_TMP_PATH}/tmp"
-
-##
-#   MISC
+#   Misc
 ##
 export CFG_DIR_NAME=".cfg"

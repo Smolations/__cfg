@@ -1,49 +1,37 @@
 ## /* @function
-#   @usage __flgs_config < -l|--list >
-#   @usage __flgs_config < --reset[=quiet] >
-#   @usage __flgs_config get <key>
-#   @usage __flgs_config set <key> <value>
+#   @usage __cfg [-d|-r]
+#   @usage __cfg [-r] <key>
+#   @usage __cfg <key> <value>
 #
 #   @output true
 #
 #   @description
-#   This function is used similarly to the git config functionality. The key=value pairs
-#   are stored in flgs.config. Values can be retrieved and set using the get and set
-#   commands respectively.
+#   This function is used similarly to the git config functionality. This one command
+#   is responsible for listing, getting, and setting of config key/values.
 #   description@
 #
 #   @options
-#   -l, --list             List all of the current key=value pairs.
-#   --reset[=quiet]        Reset config file to default settings. If the "quiet"
-#                          value is set, all non-error output is suppressed. This
-#                          includes the confirmation prompt.
+#   -d      Output the current cfg directory, if it exists.
+#   -r      Use the raw, unparsed config file to retrieve key/values.
 #   options@
 #
-#   @notes
-#   - Using the -l or --list options will ignore any other parameters.
-#   - When resetting, a backup of the config file is made and placed in
-#   the temp/ directory.
-#   notes@
-#
 #   @examples
-#   1) __flgs_config get ssh-hosts
-#   2) __flgs_config set ftp.user csmola
+#   1) __cfg
+#   2) __cfg -r
+#   3) __cfg ssh-hosts
+#   4) __cfg -r ssh-hosts
+#   5) __cfg ftp.user csmola
 #   examples@
 #
 #   @dependencies
-#   awkscripts/config-parse-key.awk
-#   awkscripts/config-set-value.awk
-#   functions/1000.__flgs_config_exists.sh
-#   functions/1100.__flgs_config_search.sh
-#   gitscripts/functions/0200.gslog.sh
+#   functions/_cfg_exists.sh
+#   functions/_cfg_get.sh
+#   functions/_cfg_search.sh
+#   functions/_cfg_set.sh
 #   dependencies@
 #
-#   @file functions/1200.__flgs_config.sh
+#   @file functions/__cfg.sh
 ## */
-
-
-
-
 function __cfg {
     local numArgs key val raw_flag="-r"
 

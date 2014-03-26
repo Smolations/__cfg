@@ -56,7 +56,7 @@ function __cfg {
         2)
             # check to see if user wants the raw value for a key
             if [ "$1" == "$raw_flag" ]; then
-                _cfg_get -r "$2"
+                _cfg_get -o "$2"
             else
                 _cfg_set "$1" "$2"
             fi
@@ -69,7 +69,7 @@ function __cfg {
 
                 $raw_flag)
                     # output entire contents of $__CFG_RAW
-                    ;;
+                    cat "$__CFG_RAW";;
 
                 "init")
                     _cfg_init;;
@@ -83,115 +83,6 @@ function __cfg {
         *)
             # output current, parsed config
             # color coated?
+            cat "$__CFG_PARSED"
     esac
-
-
-
-    if [ -n "$1" ] && false; then
-        case "$1" in
-            # Retrieve a value given a key.
-            # Errors are logged since this output is usually captured.
-            get)
-                if [ -n "$2" ]; then
-                    if __flgs_config_search "$2"; then
-                        awk -v key="$2" -f "${awkscripts_path}config-parse-key.awk" "$flgitscripts_config_parsed"
-                        return 0
-                    else
-                        __gslog "__flgs_config: Key not found ($2)"
-                        return 1
-                    fi
-                else
-                    __gslog "__flgs_config: User did not provide a key to search for!"
-                    return 1
-                fi;;
-
-            # Reset a value to a current key or set a new key=value pair.
-            set)
-                # As no output is expected, echoing the errors is OK.
-                if [ -n "$2" ]; then
-                    tempfile="${tempdir}config_temp"
-
-                    # find key. will need to replace value.
-                    if __flgs_config_search "$2"; then
-                        # make sure awk processing errors are caught
-                        if ! awk -v key="$2" -v value="$3" -f "${awkscripts_path}config-set-value.awk" "$flgitscripts_config" > "$tempfile"; then
-                            echo ${E}"  Error setting value in awk!  "${X}
-                        fi
-
-                    # key doesn't exist. we will append it to the config.
-                    else
-                        cp -f "$flgitscripts_config" "$tempfile"
-                        echo "${2}=${3}" >> "$tempfile"
-                    fi
-
-                    # copy temp config to permanent config
-                    if cp -f "$tempfile" "$flgitscripts_config"; then
-                        rm "$tempfile"
-                        return 0
-                    else
-                        echo ${E}"  Unable to copy temporary configuration to permanent config file.  "${X}
-                        return 1
-                    fi
-                else
-                    echo ${E}"  A key and value must be given to the set command.  "${X}
-                    return 1
-                fi;;
-
-            # List all of the current key=value pairs.
-            "-l" | "--list")
-                echo
-                cat "$flgitscripts_config"
-                echo;;
-
-            "--reset"|"--reset=quiet")
-                # do the reset without any output.
-                if [ "$1" != "--reset=quiet" ]; then
-                    echo
-                    echo ${W}"  WARNING: This action will reset ALL values in the config!  "${X}
-                    echo
-                    echo ${Q}"Are you sure you want to continue? y (n)"${X}
-                    read yn
-                    echo
-                    if [ "$yn" != "y" ] && [ "$yn" != "Y" ]; then
-                        echo "Wise decision. Aborting..."
-                        return 0
-                    fi
-                else
-                    local isQuiet=true
-                fi
-
-                # make a backup of existing config
-                if __flgs_config_exists; then
-                    [ $isQuiet ] || echo "Backing up config file to temp directory..."
-                    cp -f "$flgitscripts_config" "${tempdir}flgs.config.bak"
-                    : > "$flgitscripts_config"
-                fi
-
-                # create config file from default
-                if [ -s "$flgitscripts_config_defaults" ]; then
-                    tolog="Creating ${flgitscripts_config} from ${flgitscripts_config_defaults}..."
-                    # find a way to add gscomment at top?
-                    cat "$flgitscripts_config_defaults" | egrep '^[^#]' | sort >> "$flgitscripts_config" && {
-                        __gslog "${tolog}done."
-                        [ $isQuiet ] || { echo; echo "Config file was successfully reset!"; }
-                        return 0
-                    } || {
-                        __gslog "${tolog}failed!"
-                        echo ${E}"  __flgs_config: There was an error creating the __flgs_config file from the default!  "${X}
-                        return 1
-                    }
-                else
-                    echo ${E}"  __flgs_config: No default config file found!  "${X}
-                    return 1
-                fi;;
-
-            *)
-                echo ${E}"  __flgs_config: Unrecognized parameter ($1).  "${X}
-                return 1;;
-        esac
-
-    # else
-    #     echo ${E}"  __flgs_config: You must provide a command to __flgs_config.  "${X}
-    #     return 1
-    fi
 }

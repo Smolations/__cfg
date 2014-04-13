@@ -25,6 +25,7 @@
 #
 #   @file functions/__cfg_exists.sh
 ## */
+
 function _cfg_exists {
     local ret cfg_dir cur_dir=$(pwd) i=20
 
@@ -42,6 +43,7 @@ function _cfg_exists {
 
     elif [ -z "$cur_dir" ]; then
         # no cfg found
+        _set_cfg_vars "$(pwd)"
         ret=2
 
     else

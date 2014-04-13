@@ -19,10 +19,10 @@
 #
 #   @file functions/_cfg_init.sh
 ## */
+
 function _cfg_init {
     local cfg_dir cur_dir=$(pwd)
 
-    # if [ -d "$cur_dir" ]; then
     if _cfg_exists; then
         _w "a cfg already exists for the current folder hierarchy."
 
@@ -37,12 +37,10 @@ function _cfg_init {
         echo
     fi
 
-    _set_cfg_vars "${cur_dir}"
-
     mkdir -p "$__CFG_DIR"
     touch "$__CFG_RAW"
     touch "$__CFG_PARSED"
 
-    _out "initialized empty cfg at the current path."
+    _out "initialized empty cfg at:  ${__CFG_DIR}"
 }
 export -f _cfg_init

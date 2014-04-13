@@ -22,6 +22,7 @@
 #
 #   @file functions/_cfg_.sh
 ## */
+
 function _cfg_get {
     local grepped file="${__CFG_PARSED}"
 

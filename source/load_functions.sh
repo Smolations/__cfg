@@ -6,6 +6,7 @@
 #
 #   @file load-functions.sh
 ## */
+
 for file in "${CFG_FN_PATH}/"*; do
     if [ ! -d "$file" ] && [ -s "$file" ]; then
         # echo "Going to source: ${file}"

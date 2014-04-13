@@ -1,7 +1,9 @@
 ##
 #   Colors
-PRE=$'\033['
 ##
+
+PRE=$'\033['
+
 # semantic styles and colors
 [ -n "${__NORM}" ]              || export __NORM=0
 [ -n "${__BRIGHT}" ]            || export __BRIGHT=1
@@ -50,9 +52,9 @@ PRE=$'\033['
 ##
 #   Paths
 ##
-export CFG_AWK_PATH="${__CFG_PATH}/awk"
-export CFG_FN_PATH="${__CFG_PATH}/functions"
-export CFG_SRC_PATH="${__CFG_PATH}/source"
+export CFG_AWK_PATH="${CFG_PATH}/awk"
+export CFG_FN_PATH="${CFG_PATH}/functions"
+export CFG_SRC_PATH="${CFG_PATH}/source"
 
 ##
 #   Misc

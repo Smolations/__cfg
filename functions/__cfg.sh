@@ -35,7 +35,10 @@
 function __cfg {
     local numArgs key val raw_flag="-r"
 
-    if ! _cfg_exists; then
+    # since _cfg_exists sets the global cfg vars, we want to run it early. since
+    # this conditional exits if a cfg doesn't exist, we have to isolate the use
+    # case of "init" so that cfgs can actually be created.
+    if [ $# == 1 -a "$1" != "init" ] && ! _cfg_exists; then
         _er "no cfg found. try \`__cfg init\`."
         return 1
     fi

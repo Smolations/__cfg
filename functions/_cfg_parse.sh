@@ -64,5 +64,4 @@ function _cfg_parse {
 
     _kill_tmp
 }
-
-
+export -f _cfg_parse

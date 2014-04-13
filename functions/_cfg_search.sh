@@ -27,3 +27,4 @@ function _cfg_search {
 
 	egrep -q "^${1}=" "${__CFG_PARSED}"
 }
+export -f _cfg_search

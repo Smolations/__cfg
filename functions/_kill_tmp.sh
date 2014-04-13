@@ -12,3 +12,4 @@
 function _kill_tmp {
     rm -f "$__CFG_TMP"
 }
+export -f _kill_tmp

@@ -45,3 +45,4 @@ function _cfg_init {
 
     _out "initialized empty cfg at the current path."
 }
+export -f _cfg_init

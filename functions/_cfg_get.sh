@@ -33,3 +33,4 @@ function _cfg_get {
     grepped=$(egrep "^${1}=" "$file")
     echo "${grepped#*=}"
 }
+export -f _cfg_get

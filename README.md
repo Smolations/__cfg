@@ -7,7 +7,5 @@ __cfg is a command-line tool which allows you to create and manage multiple file
 Installation
 ------------
 
-    ```bash
-    # ~/.bash_profile OR ~/.bashrc
-
+    # put in ~/.bash_profile OR ~/.bashrc
     source "/path/to/__cfg/SOURCEME"

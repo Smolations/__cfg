@@ -74,3 +74,4 @@ function __cfg {
             cat "$__CFG_PARSED"
     esac
 }
+export -f __cfg

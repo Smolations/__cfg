@@ -76,3 +76,4 @@ function _cfg_set {
 
     return 0
 }
+export -f _cfg_set

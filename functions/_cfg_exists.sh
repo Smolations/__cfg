@@ -52,3 +52,4 @@ function _cfg_exists {
 
     return $ret
 }
+export -f _cfg_exists

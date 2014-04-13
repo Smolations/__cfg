@@ -31,3 +31,4 @@ function _set_cfg_vars {
     export __CFG_PARSED="${__CFG_DIR}/cfg.parsed"
     export __CFG_TMP="${__CFG_DIR}/tmp"
 }
+export -f _set_cfg_vars

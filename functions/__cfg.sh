@@ -46,17 +46,19 @@ function __cfg {
     case $# in
         2)
             # check to see if user wants the raw value for a key
-            if [ "$1" == "$raw_flag" ]; then
-                _cfg_get -o "$2"
-            else
-                _cfg_set "$1" "$2"
-            fi
+            case $1 in
+                $raw_flag)
+                    _cfg_get -o "$2";;
+
+                *)
+                    _cfg_set "$1" "$2";;
+            esac
             ;;
 
         1)
             case "$1" in
                 "-d")
-                    _out "current cfg directory = ${__CFG_DIR}";;
+                    _out "\$__CFG_DIR = ${__CFG_DIR}";;
 
                 $raw_flag)
                     # output entire contents of $__CFG_RAW

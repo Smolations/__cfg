@@ -18,3 +18,6 @@ source "${CFG_PATH}/source/environment.sh"
 
 # load functions
 source "${CFG_SRC_PATH}/load_functions.sh"
+
+
+echo "${B}${COL_MAGENTA}__cfg loaded.${X}"

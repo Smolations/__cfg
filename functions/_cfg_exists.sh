@@ -1,30 +1,36 @@
 ## /* @function
-#   @usage _cfg_exists
-#
-#   @output true (on error)
-#
-#   @description
-#   Shortcut for testing that the cfg file exists and is non-empty.
-#   description@
-#
-#   @notes
-#   - Meant for use in conditionals.
-#   - To prevent any weird recursion issues, the folder hierarchy crawl aborts
-#   if the number of levels exceeds a given limit.
-#   notes@
-#
-#   @examples
-#   # get the value associated with "mykey" in the config file
-#   _cfg_exists && myvar=`_cfg_get mykey`
-#   examples@
-#
-#   @dependencies
-#   functions/_er.sh
-#   functions/_set_cfg_vars.sh
-#   dependencies@
-#
-#   @file functions/__cfg_exists.sh
-## */
+ #  @usage _cfg_exists
+ #
+ #  @output true (on error)
+ #
+ #  @description
+ #  Shortcut for testing that the cfg file exists and is non-empty.
+ #  description@
+ #
+ #  @notes
+ #  - Meant for use in conditionals.
+ #  - To prevent any weird recursion issues, the folder hierarchy crawl aborts
+ #  if the number of levels exceeds a given limit.
+ #  notes@
+ #
+ #  @examples
+ #  # get the value associated with "mykey" in the config file
+ #  _cfg_exists && myvar=`_cfg_get mykey`
+ #  examples@
+ #
+ #  @dependencies
+ #  functions/_er.sh
+ #  functions/_set_cfg_vars.sh
+ #  dependencies@
+ #
+ #  @returns
+ #  0 - cfg found
+ #  1 - too many directory levels to traverse
+ #  2 - no cfg found
+ #  returns@
+ #
+ #  @file functions/__cfg_exists.sh
+ ## */
 
 function _cfg_exists {
     local ret cfg_dir cur_dir=$(pwd) i=20

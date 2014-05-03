@@ -19,5 +19,8 @@ source "${CFG_PATH}/source/environment.sh"
 # load functions
 source "${CFG_SRC_PATH}/load_functions.sh"
 
+# populate globals (initialize)
+_cfg_exists
+
 
 echo "${B}${COL_MAGENTA}__cfg loaded.${X}"

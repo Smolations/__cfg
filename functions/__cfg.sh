@@ -1,37 +1,59 @@
 ## /* @function
-#   @usage __cfg [-d|-r]
-#   @usage __cfg [-r] <key>
-#   @usage __cfg <key> <value>
-#
-#   @output true
-#
-#   @description
-#   This function is used similarly to the git config functionality. This one command
-#   is responsible for listing, getting, and setting of config key/values.
-#   description@
-#
-#   @options
-#   -d      Output the current cfg directory, if it exists.
-#   -r      Use the raw, unparsed config file to retrieve key/values.
-#   options@
-#
-#   @examples
-#   1) __cfg
-#   2) __cfg -r
-#   3) __cfg ssh-hosts
-#   4) __cfg -r ssh-hosts
-#   5) __cfg ftp.user csmola
-#   examples@
-#
-#   @dependencies
-#   functions/_cfg_exists.sh
-#   functions/_cfg_get.sh
-#   functions/_cfg_search.sh
-#   functions/_cfg_set.sh
-#   dependencies@
-#
-#   @file functions/__cfg.sh
-## */
+ #  @usage __cfg init
+ #  @usage __cfg [-d|-r]
+ #  @usage __cfg [-r] <key>
+ #  @usage __cfg <key> <value>
+ #
+ #  @output true
+ #
+ #  @description
+ #  This function is used similarly to the git config functionality. This one command
+ #  is responsible for listing, getting, and setting of config key/values. When a
+ #  new cfg is initialized, the current directory and all subdirectories will be
+ #  considered to be under the purview of that cfg.
+ #  description@
+ #
+ #  @options
+ #  -d      Output the current cfg directory, if it exists.
+ #  -r      Use the raw, unparsed config file to retrieve key/values.
+ #  options@
+ #
+ #  @examples
+ #  # lists all key=value pairs
+ #  $ __cfg
+ #
+ #  # initialize new config in current directory
+ #  $ __cfg init
+ #
+ #  # return value associated with ssh-hosts key
+ #  $ __cfg ssh-hosts
+ #
+ #  # set:  ftp.user=csmola
+ #  $ __cfg ftp.user csmola
+ #
+ #  # use a token to reference an existing value
+ #  $ __cfg ftp.at "@{ftp.user}@myftpsite.com"
+ #
+ #  # use raw cfg so tokens can be seen
+ #  $ __cfg -r
+ #  $ __cfg -r ssh-hosts
+ #  examples@
+ #
+ #  @dependencies
+ #  functions/_cfg_exists.sh
+ #  functions/_cfg_get.sh
+ #  functions/_cfg_search.sh
+ #  functions/_cfg_set.sh
+ #  dependencies@
+ #
+ #  @returns
+ #  0 - successful execution
+ #  1 - could not find cfg
+ #  returns@
+ #
+ #  @file functions/__cfg.sh
+ ## */
+
 function __cfg {
     local numArgs key val raw_flag="-r"
 
@@ -48,7 +70,7 @@ function __cfg {
             # check to see if user wants the raw value for a key
             case $1 in
                 $raw_flag)
-                    _cfg_get -o "$2";;
+                    _cfg_get $raw_flag "$2";;
 
                 *)
                     _cfg_set "$1" "$2";;

@@ -35,6 +35,10 @@
 function _cfg_search {
     [ -z "$1" ] && return 1
 
-    egrep -q "^${1}=" "${__CFG_PARSED}"
+    local pattern
+    pattern="^${1//[/\\[}="
+    pattern="${pattern//]/\\]}"
+
+    egrep -q "$pattern" "${__CFG_PARSED}"
 }
 export -f _cfg_search

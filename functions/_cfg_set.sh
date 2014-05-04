@@ -47,7 +47,7 @@ function _cfg_set {
 
     # key/value cannot be empty
     if [ -z "$KEY" ] || [ -z "$VAL" ]; then
-        _er "_cfg_set requires two arguments."
+        _er "_cfg_set requires two arguments. Given: $@"
         return 1
     fi
 

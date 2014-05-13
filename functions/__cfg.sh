@@ -2,6 +2,7 @@
  #  @usage __cfg init
  #  @usage __cfg [-d|-r]
  #  @usage __cfg [-r] <key>
+ #  @usage __cfg - <key>
  #  @usage __cfg <key> <value>
  #
  #  @output true
@@ -11,6 +12,10 @@
  #  is responsible for listing, getting, and setting of config key/values. When a
  #  new cfg is initialized, the current directory and all subdirectories will be
  #  considered to be under the purview of that cfg.
+ #
+ #  One difference between git's config and this one is that __cfg allows the user
+ #  to remove a key (and any associated value) completely. See @examples for
+ #  @usage details.
  #  description@
  #
  #  @options
@@ -34,6 +39,9 @@
  #  # use a token to reference an existing value
  #  $ __cfg ftp.at "@{ftp.user}@myftpsite.com"
  #
+ #  # remove a key (and any associated value)
+ #  $ __cfg - ftp.user
+ #
  #  # use raw cfg so tokens can be seen
  #  $ __cfg -r
  #  $ __cfg -r ssh-hosts
@@ -42,8 +50,11 @@
  #  @dependencies
  #  functions/_cfg_exists.sh
  #  functions/_cfg_get.sh
+ #  functions/_cfg_init.sh
+ #  functions/_cfg_rm.sh
  #  functions/_cfg_search.sh
  #  functions/_cfg_set.sh
+ #  functions/_out.sh
  #  dependencies@
  #
  #  @returns
@@ -71,6 +82,9 @@ function __cfg {
             case $1 in
                 $raw_flag)
                     _cfg_get $raw_flag "$2";;
+
+                -)
+                    _cfg_rm "$2";;
 
                 *)
                     _cfg_set "$1" "$2";;

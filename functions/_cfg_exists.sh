@@ -33,7 +33,7 @@
  ## */
 
 function _cfg_exists {
-    local ret cfg_dir cur_dir=$(pwd) i=20
+    local ret=0 i=20 cur_dir=$(pwd) cfg_dir
 
     while [ -n "$cur_dir" ] && (( i > 0 )); do
         # echo "${i}: ${cur_dir}"
@@ -48,7 +48,7 @@ function _cfg_exists {
         ret=1
 
     elif [ -z "$cur_dir" ]; then
-        # no cfg found
+        # no cfg found.
         _set_cfg_vars "$(pwd)"
         ret=2
 

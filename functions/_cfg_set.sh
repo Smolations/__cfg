@@ -23,6 +23,7 @@
  #  examples@
  #
  #  @dependencies
+ #  `grep`
  #  `awk`
  #  awk/cfg-set-value.awk
  #  functions/_cfg_parse.sh
@@ -43,16 +44,19 @@
  ## */
 
 function _cfg_set {
-    local KEY="$1" VAL="$2"
+    local numArgs="$#" KEY="$1" VAL
+
+    shift
+    VAL="$@"
 
     # key/value cannot be empty
-    if [ -z "$KEY" ] || [ -z "$VAL" ]; then
+    if [ $numArgs -lt 2 ]; then
         _er "_cfg_set requires two arguments. Given: $@"
         return 1
     fi
 
     # key cannot contain an equals sign
-    if egrep -q '=' <<< "$KEY"; then
+    if grep -q '=' <<< "$KEY"; then
         _er "_cfg_set: KEY must not contain an equals sign (=)."
         return 2
     fi
